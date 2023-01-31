@@ -22,6 +22,8 @@ def extract_har_filters(link):
     if not link.startswith("https://www.har.com/search/dosearch?"):
         print("Incorrect base link provided")
         print("You may be searching by city, try searching by map bounds instead")
+    
+    # try to continue anyway
     link = re.sub("https:\/\/www\.har\.com\/.*\?", "", link)
     args = link.split("&")
     for arg in args:
