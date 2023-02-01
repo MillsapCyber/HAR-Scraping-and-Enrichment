@@ -30,6 +30,11 @@ def extract_har_filters(link):
     for arg in args:
         tmp = arg.split("=")
         retval[tmp[0]] = tmp[1]
+    if "view" in retval.keys():
+        del retval['view']
+    if "page" in retval.keys():
+        del retval['page']
+    print(retval)
     return retval
 
 
@@ -262,16 +267,16 @@ def filter_listings_by_fiber(evaluated_listings):
     """
     retval = []
     for listing in evaluated_listings:
-        if listing["Fiber"]:
+        if listing["Fiber"] == True:
             retval.append(listing)
     return retval
 
 
 if __name__ == "__main__":
-    # set your filters up in har, then pass that link into extract_har_filters 
-    # which searches every listing in texas for a 3 bed 2 bath <= $250,000
+    # set your filters up in har, then pass that link into extract_har_filters, like the following
+    # example which searches every listing in texas for a 3 bed 2 bath <= $100,000
     arguments = extract_har_filters(
-        "https://www.har.com/katy/realestate/for_sale?listing_price_max=250000&bedroom_min=3&full_bath_min=2&all_status=A&sort=listdate%20desc&view=list"
+        "https://www.har.com/search/dosearch?for_sale=1&listing_price_max=100000&bedroom_min=3&full_bath_min=2&all_status=A&sort=listdate%20desc&view=list"
     )
     # apply filters and gather listings
     listings = get_listings(arguments)
